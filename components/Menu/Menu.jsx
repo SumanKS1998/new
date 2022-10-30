@@ -24,8 +24,8 @@ const Menu = () => {
     setLoading(true);
     const unsub = onSnapshot(collection(DB, "Categories"), (snapshot) => {
       setServiceData(snapshot.docs.map((item) => item.data()));
+      setLoading(false);
     });
-    setLoading(false);
     return () => unsub();
   }, []);
   const handleModal = () => {
