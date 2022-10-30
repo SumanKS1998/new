@@ -16,7 +16,7 @@ const style = {
   boxShadow: 24,
   p: 2,
   borderRadius: 5,
-  height: "400px",
+  maxHeight: "400px",
   overflow: "auto",
 };
 
