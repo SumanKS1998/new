@@ -1,10 +1,9 @@
 import React from 'react'
-import Welcome from '../components/Welcome/Welcome'
+import Menu from '../../components/Menu/Menu'
 
 const index = () => {
   return (
-    <Welcome/>
-    
+    <Menu/>
   )
 }
 
