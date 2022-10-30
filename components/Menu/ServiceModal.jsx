@@ -82,7 +82,7 @@ export default function ServiceModal({
               })}
             </Stack>
           ) : (
-            <Box component="img" src="/images/not-found.png" />
+            <Box component="img" src="/images/not-found.png" sx={{width:"60px",display:"block",mx:"auto"}}/>
           )}
 
           <Button
