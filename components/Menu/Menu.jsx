@@ -1,55 +1,93 @@
-import { Button, Modal, Paper, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Divider,
+  Modal,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Box, Container, Stack } from "@mui/system";
-import React, { useState } from "react";
-import SearchIcon from "@mui/icons-material/Search";
+import React, { useEffect, useState } from "react";
 import BasicModal from "./Modal";
+import { collection, onSnapshot } from "firebase/firestore";
+import { DB } from "../../config/firebase_config";
+import Search from "./Search";
 const Menu = () => {
   const [open, setOpen] = useState(false);
+  const [serviceData, setServiceData] = useState([]);
+  const [selectedItem, setSelectedItem] = useState([]);
+  useEffect(() => {
+    const unsub = onSnapshot(collection(DB, "Categories"), (snapshot) => {
+      setServiceData(snapshot.docs.map((item) => item.data()));
+    });
+    return () => unsub();
+  }, []);
+  const handleModal = () => {
+    setOpen(true);
+  };
   return (
     <>
-      <BasicModal open={open} setOpen={setOpen} />
+      <BasicModal open={open} setOpen={setOpen} selectedItem={selectedItem} />
       <Container sx={{ my: 2 }}>
-        <Stack direction="row" sx={{ mb: 2 }}>
-          <TextField
-            label="Search"
-            fullWidth
-            InputProps={{
-              sx: {
-                borderRadius: "2em 0 0 2em",
-              },
-            }}
-          />
-          <Button variant="contained" className="search-btn">
-            <SearchIcon />
-          </Button>
-        </Stack>
-        <Typography variant="h5" fontWeight="medium">
-          Title
-        </Typography>
-        <Box
-          sx={{ width: "300px", display: "block" }}
-          component="img"
-          src="/images/salon.png"
+        <Search
+          serviceData={serviceData.map((item) => item.service)}
+          entireData={serviceData}
         />
-        <Typography fontWeight="medium" my={2}>
-          Sub-Title
-        </Typography>
-        <Stack
-          className="menu-card"
-          direction="row"
-          justifyContent="space-between"
-          component={Paper}
-          p={2}
-          alignItems="flex-end"
-        >
-          <Stack>
-            <Typography variant="body2">Menu Item</Typography>
-            <Typography variant="h6">₹98</Typography>
-          </Stack>
-          <Button className="add-btn" onClick={() => setOpen(true)}>
-            View
-          </Button>
-        </Stack>
+        {serviceData.length > 0 &&
+          serviceData.map((item) => {
+            return (
+              <Stack key={item.service} gap={2}>
+                <Typography variant="h5" fontWeight="bold">
+                  {item.service}
+                </Typography>
+                <Box
+                  sx={{
+                    height: "250px",
+                    width: "100%",
+                    display: "block",
+                    objectFit: "cover",
+                    borderRadius: 5,
+                  }}
+                  component="img"
+                  src={item.categoryImage}
+                />
+                {item?.servicesArray?.map((serviceItem) => {
+                  return (
+                    <>
+                      <Stack
+                        className="menu-card"
+                        direction="row"
+                        justifyContent="space-between"
+                        component={Paper}
+                        p={2}
+                        alignItems="flex-end"
+                      >
+                        <Stack>
+                          <Typography variant="body2">
+                            {serviceItem.service}
+                          </Typography>
+                          <Typography variant="h6">
+                            ₹{serviceItem.price}
+                          </Typography>
+                        </Stack>
+                        <Button
+                          className="add-btn"
+                          onClick={() => {
+                            setSelectedItem(serviceItem);
+                            handleModal();
+                          }}
+                        >
+                          View
+                        </Button>
+                      </Stack>
+                    </>
+                  );
+                })}
+
+                <Divider sx={{ my: 2 }} />
+              </Stack>
+            );
+          })}
       </Container>
     </>
   );
