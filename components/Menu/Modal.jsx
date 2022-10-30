@@ -16,8 +16,7 @@ const style = {
   borderRadius: 5,
 };
 
-export default function BasicModal({ open, setOpen }) {
-  const handleOpen = () => setOpen(true);
+export default function BasicModal({ open, setOpen, selectedItem }) {
   const handleClose = () => setOpen(false);
 
   return (
@@ -30,10 +29,15 @@ export default function BasicModal({ open, setOpen }) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Menu Item
+            {selectedItem.service}
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            980
+          <Typography
+            id="modal-modal-description"
+            sx={{ mt: 2 }}
+            variant="h4"
+            fontWeight="bold"
+          >
+            ₹{selectedItem.price}
           </Typography>
           <Button
             className="add-btn"
