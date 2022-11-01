@@ -35,7 +35,9 @@ export default function Gallery() {
 
   return (
     <Box sx={{ width: "100%", height: "100%", overflowY: "scroll" }}>
-      <Typography variant='h6'>Images for {gallery.replaceAll("_", " ")}</Typography>
+      <Typography variant="h6">
+        Images for {gallery?.replaceAll("_", " ")}
+      </Typography>
       <ImageList variant="masonry" cols={2} gap={8}>
         {categoryData.length > 0 &&
           categoryData[0].galleryImages.map((item) => (
@@ -52,5 +54,3 @@ export default function Gallery() {
     </Box>
   );
 }
-
- 
