@@ -15,11 +15,13 @@ import { DB } from "../../config/firebase_config";
 import Search from "./Search";
 import Lottie from "lottie-react";
 import animation from "../../public/images/loading.json";
+import { useRouter } from "next/router";
 const Menu = () => {
   const [open, setOpen] = useState(false);
   const [serviceData, setServiceData] = useState([]);
   const [selectedItem, setSelectedItem] = useState([]);
   const [loading, setLoading] = useState(false);
+  const router=useRouter()
   useEffect(() => {
     setLoading(true);
     const unsub = onSnapshot(collection(DB, "Categories"), (snapshot) => {
@@ -37,7 +39,7 @@ const Menu = () => {
       <BasicModal open={open} setOpen={setOpen} selectedItem={selectedItem} />
       {loading ? (
         <Dialog open={true}>
-          <Box sx={{width:'100px'}}>
+          <Box sx={{ width: "100px" }}>
             <Lottie animationData={animation} loop={true} />
           </Box>
         </Dialog>
@@ -50,55 +52,68 @@ const Menu = () => {
           {serviceData.length > 0 &&
             serviceData.map((item) => {
               return (
-                <Stack key={item.service} gap={2}>
-                  <Typography variant="h5" fontWeight="bold">
-                    {item.service}
-                  </Typography>
+                <Stack
+                  key={item.service}
+                  gap={1}
+                  component={Paper}
+                  direction="row"
+                  alignItems="flex-end"
+                  p={2}
+                  borderRadius={3}
+                  mb={2}
+                  elevation={3}
+                >
                   <Box
                     sx={{
-                      height: "250px",
-                      width: "100%",
+                      width: "70px",
+                      height: "70px",
                       display: "block",
                       objectFit: "cover",
-                      borderRadius: 5,
+                      borderRadius: 3,
                     }}
                     component="img"
                     src={item.categoryImage}
                   />
-                  {item?.servicesArray?.map((serviceItem) => {
-                    return (
-                      <>
-                        <Stack
-                          className="menu-card"
-                          direction="row"
-                          justifyContent="space-between"
-                          component={Paper}
-                          p={2}
-                          alignItems="flex-end"
-                        >
-                          <Stack>
-                            <Typography variant="body2">
-                              {serviceItem.service}
-                            </Typography>
-                            <Typography variant="h6">
-                              ₹{serviceItem.price}
-                            </Typography>
-                          </Stack>
-                          <Button
-                            className="add-btn"
-                            onClick={() => {
-                              setSelectedItem(serviceItem);
-                              handleModal();
-                            }}
-                          >
-                            View
-                          </Button>
-                        </Stack>
-                      </>
-                    );
-                  })}
-
-                  <Divider sx={{ my: 2 }} />
+                  <Stack direction="column" height="100%" width="100%" gap={1}>
+                    <Typography variant="h5" fontWeight="bold">
+                      {item.service}
+                    </Typography>
+                    <Stack
+                      direction="row"
+                      gap={1}
+                      width="max-content"
+                      ml="auto"
+                    >
+                      <Button
+                        sx={{
+                          textTransform: "inherit",
+                          borderRadius: "10px !important",
+                        }}
+                        variant="contained"
+                        onClick={() =>
+                          router.push(
+                            `/menu/${item.service.replaceAll(" ", "_")}`
+                          )
+                        }
+                      >
+                        Details
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        sx={{
+                          textTransform: "inherit",
+                          borderRadius: "10px !important",
+                        }}
+                        onClick={() =>
+                          router.push(
+                            `/${item.service.replaceAll(" ", "_")}`
+                          )
+                        }
+                      >
+                        Gallery
+                      </Button>
+                    </Stack>
+                  </Stack>
                 </Stack>
               );
             })}
