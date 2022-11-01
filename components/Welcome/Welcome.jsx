@@ -31,7 +31,7 @@ const Welcome = () => {
         />
         <Stack>
           <Typography variant="body1">Catalogue via Whatsapp</Typography>
-          <Button className="option-btn-wapp" endIcon={<ArrowForwardIosIcon />}>
+          <Button disabled={true} className="option-btn-wapp" endIcon={<ArrowForwardIosIcon />}>
             <a href="https://wa.me/c/918708509261">Continue</a>
           </Button>
         </Stack>
