@@ -1,14 +1,33 @@
-import React from "react";
-import { Typography, Stack, Box, Button, Paper } from "@mui/material";
+import React, { useEffect } from "react";
+import {
+  Typography,
+  Stack,
+  Box,
+  Button,
+  Paper,
+  CircularProgress,
+} from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Container } from "@mui/system";
 import { useRouter } from "next/router";
 const Welcome = () => {
   const router = useRouter();
+
+  useEffect(() => {
+    setTimeout(() => {
+      router.push("/menu");
+    }, [500]);
+  }, []);
   return (
     <Container sx={{ height: "95vh" }}>
-      <Box component="img" src="/images/salon.png" width="100%" />
-      <Stack gap={1}>
+      <Box
+        component="img"
+        src="/images/bg.png"
+        width="100%"
+        borderRadius={3}
+        mt={3}
+      />
+      <Stack gap={1} mt={4}>
         <Typography variant="h4" fontWeight="bold" textAlign="center">
           Hey! Welcome
         </Typography>
@@ -16,48 +35,7 @@ const Welcome = () => {
           We take pride in saying that we do science-based styling, not
           product-based.
         </Typography>
-      </Stack>
-      <Stack
-        direction="row"
-        gap={2}
-        component={Paper}
-        p={3}
-        className="option-container"
-      >
-        <Box
-          component="img"
-          src="/images/whatsapp.png"
-          sx={{ width: "60px", height: "60px" }}
-        />
-        <Stack>
-          <Typography variant="body1">Catalogue via Whatsapp</Typography>
-          <Button disabled={true} className="option-btn-wapp" endIcon={<ArrowForwardIosIcon />}>
-            <a href="https://wa.me/c/918708509261">Continue</a>
-          </Button>
-        </Stack>
-      </Stack>
-      <Stack
-        direction="row"
-        gap={2}
-        component={Paper}
-        p={3}
-        className="option-container"
-      >
-        <Box
-          component="img"
-          src="/images/web.png"
-          sx={{ width: "60px", height: "60px" }}
-        />
-        <Stack>
-          <Typography variant="body1">Catalogue via Web</Typography>
-          <Button
-            onClick={() => router.push("/menu")}
-            className="option-btn"
-            endIcon={<ArrowForwardIosIcon />}
-          >
-            Continue
-          </Button>
-        </Stack>
+        <CircularProgress sx={{ mx: "auto", mt: 5 }} />
       </Stack>
     </Container>
   );
