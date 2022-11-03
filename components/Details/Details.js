@@ -81,15 +81,7 @@ const Details = () => {
                       </Typography>
                       <Typography variant="h6">₹{serviceItem.price}</Typography>
                     </Stack>
-                    <Button
-                      className="add-btn"
-                      onClick={() => {
-                        setSelectedItem(serviceItem);
-                        handleModal();
-                      }}
-                    >
-                      View
-                    </Button>
+                    
                   </Stack>
                 </>
               );
