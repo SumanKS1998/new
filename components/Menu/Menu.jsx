@@ -1,10 +1,12 @@
 import {
+  AppBar,
   Button,
   Dialog,
   Divider,
   Modal,
   Paper,
   TextField,
+  Toolbar,
   Typography,
 } from "@mui/material";
 import { Box, Container, Stack } from "@mui/system";
@@ -21,7 +23,7 @@ const Menu = () => {
   const [serviceData, setServiceData] = useState([]);
   const [selectedItem, setSelectedItem] = useState([]);
   const [loading, setLoading] = useState(false);
-  const router=useRouter()
+  const router = useRouter();
   useEffect(() => {
     setLoading(true);
     const unsub = onSnapshot(collection(DB, "Categories"), (snapshot) => {
@@ -45,6 +47,22 @@ const Menu = () => {
         </Dialog>
       ) : (
         <Container sx={{ my: 2 }}>
+          <AppBar position="fixed">
+            <Toolbar>
+              <Stack alignItems='center' width='100%' py={1}>
+                <Box
+                  component="img"
+                  src="/images/appLogo.png"
+                  width="180px"
+                 
+                />
+                 
+              </Stack>
+            </Toolbar>
+          </AppBar>
+          <Toolbar />
+          <br/>
+          <br/>
           <Search
             serviceData={serviceData.map((item) => item.service)}
             entireData={serviceData}
@@ -105,9 +123,7 @@ const Menu = () => {
                           borderRadius: "10px !important",
                         }}
                         onClick={() =>
-                          router.push(
-                            `/${item.service.replaceAll(" ", "_")}`
-                          )
+                          router.push(`/${item.service.replaceAll(" ", "_")}`)
                         }
                       >
                         Gallery
