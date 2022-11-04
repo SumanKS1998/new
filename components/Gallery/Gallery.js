@@ -2,6 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {
   arrayUnion,
   collection,
@@ -14,7 +15,7 @@ import {
 } from "firebase/firestore";
 import { DB } from "../../config/firebase_config";
 import { useRouter } from "next/router";
-import { Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 export default function Gallery() {
   const [categoryData, setCategoryData] = React.useState([]);
   const router = useRouter();
@@ -40,7 +41,7 @@ export default function Gallery() {
       </Typography>
       <ImageList variant="masonry" cols={2} gap={8}>
         {categoryData.length > 0 &&
-          categoryData[0].galleryImages.map((item) => (
+          categoryData[0].galleryImages?.map((item) => (
             <ImageListItem key={item.url}>
               <img
                 src={`${item.url}?w=248&fit=crop&auto=format`}
@@ -51,6 +52,25 @@ export default function Gallery() {
             </ImageListItem>
           ))}
       </ImageList>
+      {categoryData.length > 0 && !categoryData[0].galleryImages && (
+        <Stack
+          height="50vh"
+          width="100%"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Box component="img" width="100px" src="/images/not-found.png" />
+          <Typography fontWeight="medium">Nothing here 😔</Typography>
+          <Button
+            startIcon={<KeyboardBackspaceIcon />}
+            variant="contained"
+            sx={{ mt: 2 }}
+            onClick={() => router.push("/menu")}
+          >
+            GO BACK
+          </Button>
+        </Stack>
+      )}
     </Box>
   );
 }
