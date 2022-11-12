@@ -35,10 +35,10 @@ const Menu = () => {
   const handleModal = () => {
     setOpen(true);
   };
-
+  console.log(serviceData);
   return (
     <>
-      <BasicModal open={open} setOpen={setOpen} selectedItem={selectedItem} />
+      {/* <BasicModal open={open} setOpen={setOpen} selectedItem={selectedItem} /> */}
       {loading ? (
         <Dialog open={true}>
           <Box sx={{ width: "100px" }}>
@@ -49,24 +49,15 @@ const Menu = () => {
         <Container sx={{ my: 2 }}>
           <AppBar position="fixed">
             <Toolbar>
-              <Stack alignItems='center' width='100%' py={1}>
-                <Box
-                  component="img"
-                  src="/images/appLogo.png"
-                  width="180px"
-                 
-                />
-                 
+              <Stack alignItems="center" width="100%" py={1}>
+                <Typography>Radison</Typography>
               </Stack>
             </Toolbar>
           </AppBar>
           <Toolbar />
-          <br/>
-          <br/>
-          <Search
-            serviceData={serviceData.map((item) => item.service)}
-            entireData={serviceData}
-          />
+          <br />
+          <br />
+
           {serviceData.length > 0 &&
             serviceData.map((item) => {
               return (
@@ -102,32 +93,7 @@ const Menu = () => {
                       width="max-content"
                       ml="auto"
                     >
-                      <Button
-                        sx={{
-                          textTransform: "inherit",
-                          borderRadius: "10px !important",
-                        }}
-                        variant="contained"
-                        onClick={() =>
-                          router.push(
-                            `/menu/${item.service.replaceAll(" ", "_")}`
-                          )
-                        }
-                      >
-                        Details
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        sx={{
-                          textTransform: "inherit",
-                          borderRadius: "10px !important",
-                        }}
-                        onClick={() =>
-                          router.push(`/${item.service.replaceAll(" ", "_")}`)
-                        }
-                      >
-                        Gallery
-                      </Button>
+                      <Typography>{item?.servicesArray[0].price}</Typography>
                     </Stack>
                   </Stack>
                 </Stack>
