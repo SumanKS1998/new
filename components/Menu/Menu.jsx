@@ -38,7 +38,7 @@ const Menu = () => {
   console.log(serviceData);
   return (
     <>
-      {/* <BasicModal open={open} setOpen={setOpen} selectedItem={selectedItem} /> */}
+      <BasicModal open={open} setOpen={setOpen} selectedItem={selectedItem} />
       {loading ? (
         <Dialog open={true}>
           <Box sx={{ width: "100px" }}>
@@ -57,9 +57,12 @@ const Menu = () => {
           <Toolbar />
           <br />
           <br />
-
+          <Search
+            serviceData={serviceData.map((item) => item.service)}
+            entireData={serviceData}
+          />
           {serviceData.length > 0 &&
-            serviceData.map((item) => {
+            serviceData.slice(1,serviceData.length-1).map((item) => {
               return (
                 <Stack
                   key={item.service}
