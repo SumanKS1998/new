@@ -50,7 +50,7 @@ const Menu = () => {
           <AppBar position="fixed">
             <Toolbar>
               <Stack alignItems="center" width="100%" py={1}>
-                <Typography>Radison</Typography>
+                <Typography>Looks Unisex Salon</Typography>
               </Stack>
             </Toolbar>
           </AppBar>
@@ -62,7 +62,7 @@ const Menu = () => {
             entireData={serviceData}
           />
           {serviceData.length > 0 &&
-            serviceData.slice(1,serviceData.length-1).map((item) => {
+            serviceData.slice(1, serviceData.length - 1).map((item) => {
               return (
                 <Stack
                   key={item.service}
